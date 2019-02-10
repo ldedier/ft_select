@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstpop_ptr.c                                   :+:      :+:    :+:   */
+/*   ft_add_to_dlist_back.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/10 21:25:43 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/10 21:27:38 by ldedier          ###   ########.fr       */
+/*   Created: 2019/02/10 21:31:44 by ldedier           #+#    #+#             */
+/*   Updated: 2019/02/10 21:35:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_dlstpop_ptr(t_dlist **list)
+int		ft_add_to_dlist_back(t_dlist **list, void *content, size_t size)
 {
-	void	*content;
-	t_dlist	*ptr;
+	t_dlist *node;
 
-	if (*list != NULL)
-	{
-		ptr = *list;
-		content = ptr->content;
-		(*list)->prev->next = (*list)->next;
-		(*list)->next->prev = (*list)->prev;
-		free(ptr);
-		if (*list == (*list)->next)
-			*list = NULL;
-		else
-			*list = (*list)->next;
-		return (content);
-	}
-	return (NULL);
+	if (!(node = ft_dlstnew(content, size)))
+		return (1);
+	else
+		ft_dlstpushback(list, node);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:21:30 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/10 21:00:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/10 21:37:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,12 +191,15 @@ int					ft_substitute_str(char **str, char *to_inject,
 						int index_to_inject, int len_to_delete);
 void				ft_dlstadd(t_dlist **alst, t_dlist *newelem);
 t_dlist				*ft_dlstnew_ptr(void const *content, size_t content_size);
+t_dlist				*ft_dlstnew(void const *content, size_t content_size);
 void				ft_dlstpushback(t_dlist **alst, t_dlist *newelem);
 void				*ft_dlstpop_ptr(t_dlist **lst);
 void				ft_dlstpop(t_dlist **lst);
 int					ft_add_to_dlist_ptr(t_dlist **list, void *content,
 						size_t size);
 int					ft_add_to_dlist_ptr_back(t_dlist **list, void *content,
+						size_t size);
+int					ft_add_to_dlist_back(t_dlist **list, void *content,
 						size_t size);
 void				ft_dlstiter(t_dlist *lst, void (*f)(t_dlist *elem));
 void				ft_dlstiter_inv(t_dlist *lst, void (*f)(t_dlist *elem));
