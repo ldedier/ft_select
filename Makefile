@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/10 17:49:02 by ldedier           #+#    #+#              #
-#    Updated: 2019/02/10 17:49:31 by ldedier          ###   ########.fr        #
+#    Updated: 2019/02/11 18:56:31 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ LIBFT = $(LIBFTDIR)/libft.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		=	main.c
+SRCS_NO_PREFIX		=	main.c init.c render.c
 
 INCLUDES_NO_PREFIX	= ft_select.h
 
@@ -41,7 +41,7 @@ INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
-LFLAGS = -L $(LIBFTDIR) -lft
+LFLAGS = -L $(LIBFTDIR) -lft -ltermcap
 
 ifeq ($(DEBUG), 1)
 	LFLAGS += -fsanitize=address
