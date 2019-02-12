@@ -6,81 +6,51 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 02:34:27 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/11 23:29:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:45:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		putchar_int(int i)
+void	print_selection(t_env *e)
 {
-	ft_putchar_fd(i, 2);
-	return (0);
-}
+	t_dlist	*ptr;
+	int		first;
+	int		first_print;
+	t_arg	*arg;
 
-int		reset_shell(void)
-{
-	if (tcsetattr(0, TCSAFLUSH, &g_env.term_init) == -1)
-		return (-1);
-	return (0);
-}
-
-/*
-void	move(int x, int y)
-{
-	char *res;
-	res = tgetstr("cm", &area);
-	tputs(tgoto(res, pos_x, pos_y), 1, ft_putchar);
-}
-*/
-
-int		clear_all(void)
-{
-	char *res;
-
-	if (!(res = tgetstr("cl", NULL)))
-		return (-1);
-	tputs(res, 1, putchar_int);
-	return (0);
-}
-
-int     process_keys()
-{
-	char     buffer[3];
-
-	while (1)
+	ptr = e->args;
+	first = 1;
+	first_print = 1;
+	while ((ptr != e->args && ptr != NULL) || (first && ptr != NULL))
 	{
-		read(0, buffer, 3);
-		if (buffer[0] == 27)
-			dprintf(2, "C'est une fleche !\n");
-		else if (buffer[0] == 4)
+		arg = (t_arg *)ptr->content;
+		if (arg->selected)
 		{
-			dprintf(2, "Ctlr+d, on quitte !\n");
-			return (0);
+			if (!first_print)
+				ft_printf(" %s", arg->name);
+			else
+				ft_printf("%s", arg->name);
+			first_print = 0;
 		}
-		else if (buffer[0] == 9)
-			ft_dprintf(2, "tab!\n");
-		else if (buffer[0] == 12)
-			clear_all();
-		else
-			ft_dprintf(2, "%c", buffer[0]);
+		ptr = ptr->next;
+		first = 0;
 	}
-	return (0);
 }
 
-void	print_params(int argc, char **argv)
-{
-	int i;
 
-	i = 0;
-	while (i < argc)
-		ft_dprintf(2, "%s\n", argv[i++]);
+void __attribute__((destructor)) end();
+void    end(void) //permet de mieux checker les leaks !
+{
+//	ft_dprintf(2, "destructor loop\n");
+//	while(1);
 }
 
 int		main(int argc, char **argv, char **env)
 {
+	int ret;
+
 	(void)env;
-//	print_params(argc, argv);
 	if (argc < 2)
 	{
 		ft_dprintf(2, "This program takes at least 1 argument\n");
@@ -88,9 +58,13 @@ int		main(int argc, char **argv, char **env)
 	}
 	if (init_all(&g_env, argc, argv))
 		return (1);
+	update_center(&g_env);
 	render(&g_env);
-	process_keys();
-	reset_shell();
-	ft_dprintf(1, "auteur");
+	ret = process_keys(&g_env);
+	clear_all();
+	reset_shell();	
+	if (ret == PRINT)
+		print_selection(&g_env);
+	ft_dlstdel(&g_env.args);
 	return (0);
 }

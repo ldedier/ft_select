@@ -1,0 +1,1 @@
+cat `./ft_select ~/**/ft_s*.c`

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:55:04 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/12 00:02:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:45:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		init_args(t_env *e, int argc, char **argv)
 	int len;
 
 	e->args = NULL;
+	e->nb_args = 0;
 	i = 1;
 	e->arg_max_len = -1;
 	while (i < argc)
@@ -68,6 +69,7 @@ int		init_args(t_env *e, int argc, char **argv)
 		}
 		if (e->arg_max_len < (len = ft_strlen(arg->name)))
 			e->arg_max_len = len;
+		e->nb_args++;
 		i++;
 	}
 	e->cursor = e->args;
@@ -77,6 +79,8 @@ int		init_args(t_env *e, int argc, char **argv)
 
 int		init_all(t_env *e, int argc, char **argv)
 {
+	char	*str;
+
 	if (init_terminal_data())
 		return (1);
 	if (tcgetattr(0, &e->term) == -1)
@@ -94,6 +98,13 @@ int		init_all(t_env *e, int argc, char **argv)
 	if (init_args(e, argc, argv))
 		return (1);
 	signal(SIGWINCH, handle_resize);
+	signal(SIGINT, handle_kill);
+	signal(SIGQUIT, handle_kill);
+	signal(SIGTSTP, handle_kill);
+	signal(SIGSTOP, handle_kill);
+	signal(SIGCONT, handle_kill);
 	ioctl(0, TIOCGWINSZ, &g_env.winsize);
+	str = tgetstr("vi", NULL);
+	tputs(str, 1, putchar_int);
 	return (0);
 }
