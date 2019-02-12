@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 18:42:52 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/12 21:15:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/12 23:12:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	suppr_current(t_env *e, int *stop)
 	}
 	else	
 		e->cursor = new_cursor;
+	update_center(e);
 	render(e);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:58:32 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/12 22:56:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/13 00:21:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,21 @@ int render_args(t_env *e, int title_rendered)
 		y_pos = title_rendered * (TITLE_TOP + H_TITLE + TITLE_BOTTOM);
 		while (i < e->center.nb_lines && j * e->center.nb_lines + i < e->nb_args)
 		{
+	//		if (j == e->center.nb_columns - 1)
+	//		{
+				move(100, 0);
+				dprintf(2, "%d %d %f %d\n", j, e->center.nb_columns, x_pos, e->winsize.ws_col);
+	//		}
 			if (render_arg(e, ptr, x_pos, y_pos))
 				return (1);
 			y_pos += 1;
 			i++;
 			ptr = ptr->next;
 		}
-		x_pos += e->arg_max_len + e->center.arg_x_padding;
+		x_pos += e->arg_max_len;
+		x_pos += e->center.arg_x_padding;
+//			if (j == e->center.nb_columns - 1)
+//				dprintf(2, "after: %f \n",x_pos);
 		j++;
 	}
 	return (0);
@@ -110,24 +118,24 @@ int		render_title(t_env *e)
 	char	*res;
 
 	y = TITLE_TOP;
-	res = tgetstr("md", NULL);
+	res = tgetstr("mb", NULL);
 	tputs(res, 1, putchar_int);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, "  __  _                       _              _   ");
+	ft_dprintf(2, RED"  __  _                       _              _   "EOC);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, " / _|| |                     | |            | |  ");
+	ft_dprintf(2, MAGENTA" / _|| |                     | |            | |  "EOC);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, "| |_ | |_          ___   ___ | |  ___   ___ | |_ ");
+	ft_dprintf(2, YELLOW"| |_ | |_          ___   ___ | |  ___   ___ | |_ "EOC);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, "|  _|| __|        / __| / _ \\| | / _ \\ / __|| __|");
+	ft_dprintf(2, GREEN"|  _|| __|        / __| / _ \\| | / _ \\ / __|| __|"EOC);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, "| |  | |_         \\__ \\|  __/| ||  __/| (__ | |_ ");
+	ft_dprintf(2, CYAN"| |  | |_         \\__ \\|  __/| ||  __/| (__ | |_ "EOC);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, "|_|   \\__|        |___/ \\___||_| \\___| \\___| \\__|");
+	ft_dprintf(2, L_BLUE"|_|   \\__|        |___/ \\___||_| \\___| \\___| \\__|"EOC);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, "           ______                                ");
+	ft_dprintf(2, BLUE"           ______                                "EOC);
 	move((e->winsize.ws_col - W_TITLE) / 2 , y++);
-	ft_dprintf(2, "          |______|                               ");
+	ft_dprintf(2, BLUE"          |______|                               "EOC);
 	res = tgetstr("me", NULL);
 	tputs(res, 1, putchar_int);
 	return (0);
@@ -153,8 +161,6 @@ int		render(t_env *e)
 	return (0);
 }
 
-
-
 void	update_center(t_env *e)
 {
 	e->center.nb_columns = 	ft_clamp(1, (e->winsize.ws_col) /
@@ -167,7 +173,10 @@ void	update_center(t_env *e)
 	if (e->center.nb_columns > 0)
 		e->center.nb_lines = ft_round((double)e->nb_args /
 			(double)e->center.nb_columns);
-//	ft_dprintf(1, "l: %d c:%d\n", e->center.nb_lines, e->center.nb_columns);
+
+//	e->center.w_border = ft_max(0, (e->winsize.ws_col - ((e->center.nb_columns * e->arg_max_len) + (e->center.nb_columns) * e->center.arg_x_padding)) / 2.0);
+//	ft_dprintf(2, "POULET: %d\n", (int)((e->winsize.ws_col - ((e->center.nb_columns * e->arg_max_len) + (e->center.nb_columns) * e->center.arg_x_padding)) / 2.0));
+	ft_dprintf(1, "l: %d c:%d\n", e->center.nb_lines, e->center.nb_columns);
 }
 
 void	handle_kill(int signal)
