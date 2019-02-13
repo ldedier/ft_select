@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 17:50:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 00:21:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:32:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct		s_arg
 typedef struct		s_center
 {
 	int				w_border;
-	double			arg_x_padding;
+	int				arg_x_padding;
 	int				arg_y_padding;
 	int				nb_lines;
 	int				nb_columns;
@@ -66,6 +66,7 @@ int					init_all(t_env *e, int argc, char **argv);
 int					clear_all(void);
 void				move(int x, int y);
 int					render(t_env *e);
+int					render_arg_ptr(t_env *e, t_dlist *to_render);
 int					putchar_int(int i);
 int					reset_shell(void);
 void				update_center(t_env *e);

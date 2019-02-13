@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 18:42:52 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/12 23:12:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:43:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	process_escape_sequence(t_env *e, char *buffer, int *stop)
 	if (buffer[1] == 91 && buffer[2] == 66)
 	{
 		e->cursor = e->cursor->next;
-		render(e);
+		render_arg_ptr(e, e->cursor);
+		render_arg_ptr(e, e->cursor->prev);
 	}
 	else if (buffer[1] == 91 && buffer[2] == 65)
 	{
 		e->cursor = e->cursor->prev;
-		render(e);
+		render_arg_ptr(e, e->cursor);
+		render_arg_ptr(e, e->cursor->next);
 	}
 	else if (!buffer[1] && !buffer[2])
 		*stop = NO_PRINT;
@@ -34,7 +36,7 @@ void	select_current(t_env *e)
 
 	arg = (t_arg *)e->cursor->content;
 	arg->selected = !arg->selected;
-	render(e);
+	render_arg_ptr(e, e->cursor);
 }
 
 void	suppr_current(t_env *e, int *stop)
