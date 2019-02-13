@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 18:32:07 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/12 19:50:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/13 20:24:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		reset_shell(void)
 
 	if (tcsetattr(0, TCSAFLUSH, &g_env.term_init) == -1)
 		return (-1);
-
 	str = tgetstr("ve", NULL);
 	tputs(str, 1, putchar_int);
 	return (0);
@@ -33,6 +32,7 @@ int		reset_shell(void)
 void	move(int x, int y)
 {
 	char *res;
+
 	res = tgetstr("cm", NULL);
 	tputs(tgoto(res, x, y), 1, putchar_int);
 }

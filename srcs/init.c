@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:55:04 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 00:21:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:58:22 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,38 @@ int		init_terminal_data(void)
 	return (0);
 }
 
+void	populate_color(struct stat st, t_arg *res)
+{
+	if (S_ISREG(st.st_mode) && st.st_mode & S_IXUSR)
+		ft_strcpy(res->color, RED);
+	else if (S_ISDIR(st.st_mode))
+		ft_strcpy(res->color, DIR_COL);
+	else if (S_ISLNK(st.st_mode))
+		ft_strcpy(res->color, MAGENTA);
+	else if (S_ISSOCK(st.st_mode))
+		ft_strcpy(res->color, SOCK_COL);
+	else if (S_ISFIFO(st.st_mode))
+		ft_strcpy(res->color, FIFO_COL);
+	else if (S_ISBLK(st.st_mode))
+		ft_strcpy(res->color, BLK_COL);
+	else if (S_ISCHR(st.st_mode))
+		ft_strcpy(res->color, CHR_COL);
+	else
+		ft_strcpy(res->color, BOLD);
+}
+
 t_arg	*new_arg(char *name)
 {
-	t_arg *res;
+	t_arg		*res;
+	struct stat	st;
 
 	if (!(res = (t_arg *)malloc(sizeof(t_arg))))
 		return (NULL);
 	res->name = name;
 	res->selected = 0;
+	ft_bzero(res->color, MAX_COLOR_LEN);
+	if (lstat(res->name, &st) != -1)
+		populate_color(st, res);
 	return (res);
 }
 
@@ -52,9 +76,8 @@ int		init_args(t_env *e, int argc, char **argv)
 {
 	int		i;
 	t_arg	*arg;
-	int len;
+	int		len;
 
-	e->args = NULL;
 	e->nb_args = 0;
 	i = 1;
 	e->arg_max_len = -1;
@@ -67,7 +90,8 @@ int		init_args(t_env *e, int argc, char **argv)
 			free(arg);
 			return (1);
 		}
-		if (e->arg_max_len < (len = ft_strlen(arg->name)))
+		if (e->arg_max_len < (len = ft_strlen(arg->name) +
+					ft_strlen(PREFIX_STR)))
 			e->arg_max_len = len;
 		e->nb_args++;
 		i++;
@@ -87,22 +111,17 @@ int		init_all(t_env *e, int argc, char **argv)
 		return (-1);
 	if (tcgetattr(0, &e->term_init) == -1)
 		return (-1);
-	e->term.c_lflag &= ~(ICANON); // Met le terminal en mode non canonique.
-	e->term.c_lflag &= ~(ECHO); // les touches tapées ne s'inscriront plus dans le terminal
-	e->term.c_lflag |= ISIG; // on recupere les signaux
+	e->term.c_lflag &= ~(ICANON);
+	e->term.c_lflag &= ~(ECHO);
+	e->term.c_lflag |= ISIG;
 	e->term.c_cc[VMIN] = 1;
 	e->term.c_cc[VTIME] = 0;
-	//On applique les changements
 	if (tcsetattr(0, TCSADRAIN, &e->term) == -1)
 		return (-1);
+	e->args = NULL;
 	if (init_args(e, argc, argv))
 		return (1);
-	signal(SIGWINCH, handle_resize);
-	signal(SIGINT, handle_kill);
-	signal(SIGQUIT, handle_kill);
-	signal(SIGTSTP, handle_kill);
-	signal(SIGSTOP, handle_kill);
-	signal(SIGCONT, handle_kill);
+	init_signals();
 	ioctl(0, TIOCGWINSZ, &g_env.winsize);
 	str = tgetstr("vi", NULL);
 	tputs(str, 1, putchar_int);

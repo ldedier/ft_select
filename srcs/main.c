@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 02:34:27 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 00:21:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/13 20:16:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	print_selection(t_env *e)
 	}
 }
 
-
 void __attribute__((destructor)) end();
-void    end(void) //permet de mieux checker les leaks !
+
+void	end(void) //permet de mieux checker les leaks !
 {
-//	ft_dprintf(2, "destructor loop\n");
-//	while(1);
+	//	ft_dprintf(2, "destructor loop\n");
+	//	while(1);
 }
 
 int		main(int argc, char **argv, char **env)
@@ -62,7 +62,7 @@ int		main(int argc, char **argv, char **env)
 	render(&g_env);
 	ret = process_keys(&g_env);
 	clear_all();
-	reset_shell();	
+	reset_shell();
 	if (ret == PRINT)
 		print_selection(&g_env);
 	ft_dlstdel(&g_env.args);
