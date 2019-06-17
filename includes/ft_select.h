@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 17:50:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 20:32:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/06/17 19:26:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int					process_render_arg_ptr(t_env *e, int title_rendered,
 int					render_arg_ptr(t_env *e, t_dlist *to_render);
 int					putchar_int(int i);
 int					reset_shell(void);
+int					set_shell(void);
 void				update_center(t_env *e);
 int					process_keys(t_env *e);
 int					can_render(t_env *e);

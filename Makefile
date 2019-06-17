@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/10 17:49:02 by ldedier           #+#    #+#              #
-#    Updated: 2019/02/13 20:00:06 by ldedier          ###   ########.fr        #
+#    Updated: 2019/02/14 12:48:45 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ ifeq ($(DEBUG), 1)
 endif
 
 opti:
-	@make all -j
+	@make all -j8
 
 all:
 	@make -C $(LIBFTDIR) opti

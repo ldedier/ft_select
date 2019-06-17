@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:21:30 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/11 12:12:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/24 17:00:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct		s_tree
 
 typedef struct		s_dy_tab
 {
-	void			**tab;
+	void			**tbl;
 	size_t			current_size;
 	size_t			max_size;
 }					t_dy_tab;
@@ -204,7 +204,8 @@ int					ft_add_to_dlist_back(t_dlist **list, void *content,
 void				ft_dlstiter(t_dlist *lst, void (*f)(t_dlist *elem));
 void				ft_dlstiter_inv(t_dlist *lst, void (*f)(t_dlist *elem));
 void				ft_dlstdel_ptr(t_dlist **list);
-void				ft_dlstdel(t_dlist **list);
+void				ft_dlstdel(t_dlist **list, void (*del) (void *, size_t));
+void				ft_dlstdel_value(t_dlist **list);
 int					ft_dlstlength(t_dlist *dlist);
 
 #endif

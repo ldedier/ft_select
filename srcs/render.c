@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:58:32 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 20:18:38 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/02/24 19:17:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int		render(t_env *e)
 {
 	int rendered_title;
 
+	if (e->args == NULL)
+		return (0);
 	clear_all();
 	if (e->arg_max_len + e->center.w_border + 1 > e->winsize.ws_col)
 		return (render_insufficient_width(e));

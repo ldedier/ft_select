@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:55:04 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 19:58:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/06/17 20:30:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int		init_all(t_env *e, int argc, char **argv)
 		return (1);
 	init_signals();
 	ioctl(0, TIOCGWINSZ, &g_env.winsize);
+	str = tgetstr("ti", NULL);
+	tputs(str, 1, putchar_int);
 	str = tgetstr("vi", NULL);
 	tputs(str, 1, putchar_int);
 	return (0);

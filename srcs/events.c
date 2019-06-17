@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 18:42:52 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 20:01:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/06/17 20:13:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int		process_keys(t_env *e)
 			suppr_current(e, &stop);
 		else if (buffer[0] == 10)
 			stop = PRINT;
-	//	ft_dprintf(2,"%d %d %d\n ", buffer[0], buffer[1], buffer[2]);
+		ft_dprintf(2,"%d %d %d\n ", buffer[0], buffer[1], buffer[2]);
 		ft_bzero(buffer, sizeof(buffer));
 	}
 	return (stop);
