@@ -103,7 +103,6 @@ int		process_keys(t_env *e)
 			suppr_current(e, &stop);
 		else if (buffer[0] == 10)
 			stop = PRINT;
-		ft_dprintf(2,"%d %d %d\n ", buffer[0], buffer[1], buffer[2]);
 		ft_bzero(buffer, sizeof(buffer));
 	}
 	return (stop);

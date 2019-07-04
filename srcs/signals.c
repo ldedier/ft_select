@@ -14,16 +14,24 @@
 
 void	handle_stp()
 {
-	ft_printf("hehe\n");
-	signal(SIGTSTP, SIG_DFL);
-	ioctl(0, TIOCSTI, "\1\0\0");
 	reset_shell();
+	signal(SIGTSTP, SIG_DFL);
+	ioctl(0, TIOCSTI, "\x1a");
 }
 
 void	handle_cont()
 {
-	ft_printf("CONTINUE\n");
+	int		win_width;
+
 	set_shell();
+	win_width = g_env.winsize.ws_col;
+	ioctl(0, TIOCGWINSZ, &g_env.winsize);
+	if (win_width < g_env.winsize.ws_col)
+		g_env.decreasing = 0;
+	else if (win_width > g_env.winsize.ws_col)
+		g_env.decreasing = 1;
+	update_center(&g_env);
+	render(&g_env);
 }
 
 void	init_signals(void)

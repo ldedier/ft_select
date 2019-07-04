@@ -24,9 +24,9 @@ int		set_shell(void)
 
 	if (tcsetattr(0, TCSAFLUSH, &g_env.term) == -1)
 		return (-1);
-	str = tgetstr("ve", NULL);
+	str = tgetstr("vi", NULL);
 	tputs(str, 1, putchar_int);
-	str = tgetstr("te", NULL);
+	str = tgetstr("ti", NULL);
 	tputs(str, 1, putchar_int);
 	return (0);
 }
@@ -34,13 +34,12 @@ int		set_shell(void)
 int		reset_shell(void)
 {
 	char *str;
-
-	if (tcsetattr(0, TCSAFLUSH, &g_env.term_init) == -1)
-		return (-1);
 	str = tgetstr("ve", NULL);
 	tputs(str, 1, putchar_int);
 	str = tgetstr("te", NULL);
 	tputs(str, 1, putchar_int);
+	if (tcsetattr(0, TCSAFLUSH, &g_env.term_init) == -1)
+		return (-1);
 	return (0);
 }
 
