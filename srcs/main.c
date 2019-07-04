@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 02:34:27 by ldedier           #+#    #+#             */
-/*   Updated: 2019/03/02 15:29:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/04 19:53:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,6 @@ void	print_selection(t_env *e)
 		first = 0;
 	}
 	ft_printf("\n");
-}
-
-void __attribute__((destructor)) end();
-
-void	end(void) //permet de mieux checker les leaks !
-{
-//		ft_dprintf(2, "destructor loop\n");
-//		while(1);
 }
 
 int		main(int argc, char **argv, char **env)

@@ -6,23 +6,26 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 19:59:05 by ldedier           #+#    #+#             */
-/*   Updated: 2019/06/17 20:31:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/04 19:52:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	handle_stp()
+void	handle_stp(int sgl)
 {
+	(void)sgl;
 	reset_shell();
 	signal(SIGTSTP, SIG_DFL);
 	ioctl(0, TIOCSTI, "\x1a");
 }
 
-void	handle_cont()
+void	handle_cont(int sgl)
 {
 	int		win_width;
 
+	(void)sgl;
+	signal(SIGTSTP, handle_stp);
 	set_shell();
 	win_width = g_env.winsize.ws_col;
 	ioctl(0, TIOCGWINSZ, &g_env.winsize);

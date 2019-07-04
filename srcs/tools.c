@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 18:32:07 by ldedier           #+#    #+#             */
-/*   Updated: 2019/06/17 19:27:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/04 19:51:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		set_shell(void)
 int		reset_shell(void)
 {
 	char *str;
+
 	str = tgetstr("ve", NULL);
 	tputs(str, 1, putchar_int);
 	str = tgetstr("te", NULL);
