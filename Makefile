@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/10 17:49:02 by ldedier           #+#    #+#              #
-#    Updated: 2019/02/14 12:48:45 by ldedier          ###   ########.fr        #
+#    Updated: 2019/07/05 03:24:23 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,10 @@ LIBFT = $(LIBFTDIR)/libft.a
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
-SRCS_NO_PREFIX		=	main.c init.c render.c tools.c events.c\
-						render_insufficient.c render_args.c render_tools.c\
-						horizontal_arrows.c selection.c\
-						event_tools.c signals.c
+SRCS_NO_PREFIX		=	main.c init.c render.c tools.c events.c \
+						render_insufficient.c render_args.c render_tools.c \
+						selection.c event_tools.c signals.c \
+						right_arrow.c left_arrow.c
 
 INCLUDES_NO_PREFIX	= ft_select.h
 

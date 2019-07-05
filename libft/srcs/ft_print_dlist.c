@@ -6,13 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 19:50:37 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/10 19:53:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/05 05:01:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_print_dlist(t_dlist *dlist, void (*print_func)(void *))
+void	ft_print_dlist(t_dlist *dlist, void (*print_func)(void *))
 {
 	t_dlist *ptr;
 	int		first;

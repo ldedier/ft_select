@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 19:31:43 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 20:34:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/05 03:45:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,31 +73,37 @@ int		render_arg_ptr(t_env *e, t_dlist *to_render)
 		return (process_render_arg_ptr(e, can_render_title(e), to_render));
 }
 
+int		render_arg2(t_env *e, t_renderer *renderer)
+{
+	((t_arg *)(renderer->ptr->content))->y = renderer->i;
+	((t_arg *)(renderer->ptr->content))->x = renderer->j;
+	if (render_arg(e, renderer->ptr, renderer->xy.x, renderer->xy.y))
+		return (1);
+	renderer->xy.y += 1;
+	renderer->i++;
+	renderer->ptr = renderer->ptr->next;
+	return (0);
+}
+
 int		render_args(t_env *e, int title_rendered)
 {
-	int		i;
-	int		j;
-	t_xy	xy;
-	t_dlist *ptr;
+	t_renderer renderer;
 
-	j = 0;
-	ptr = e->args;
-	xy.x = e->center.w_border;
-	while (j < e->center.nb_columns)
+	renderer.j = 0;
+	renderer.ptr = e->args;
+	renderer.xy.x = e->center.w_border;
+	while (renderer.j < e->center.nb_columns)
 	{
-		i = 0;
-		xy.y = title_rendered * (TITLE_TOP + H_TITLE + TITLE_BOTTOM);
-		while (i < e->center.nb_lines &&
-					j * e->center.nb_lines + i < e->nb_args)
+		renderer.i = 0;
+		renderer.xy.y = title_rendered * (TITLE_TOP + H_TITLE + TITLE_BOTTOM);
+		while (renderer.i < e->center.nb_lines &&
+					renderer.j * e->center.nb_lines + renderer.i < e->nb_args)
 		{
-			if (render_arg(e, ptr, xy.x, xy.y))
+			if (render_arg2(e, &renderer))
 				return (1);
-			xy.y += 1;
-			i++;
-			ptr = ptr->next;
 		}
-		xy.x += e->arg_max_len + e->center.arg_x_padding;
-		j++;
+		renderer.xy.x += e->arg_max_len + e->center.arg_x_padding;
+		renderer.j++;
 	}
 	return (0);
 }

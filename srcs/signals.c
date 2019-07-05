@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 19:59:05 by ldedier           #+#    #+#             */
-/*   Updated: 2019/07/04 19:52:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/05 05:33:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,31 @@ void	handle_cont(int sgl)
 
 void	init_signals(void)
 {
-	signal(SIGWINCH, handle_resize);
 	signal(SIGINT, handle_kill);
 	signal(SIGHUP, handle_kill);
 	signal(SIGTERM, handle_kill);
 	signal(SIGABRT, handle_kill);
+	signal(SIGILL, handle_kill);
+	signal(SIGTRAP, handle_kill);
+	signal(SIGEMT, handle_kill);
+	signal(SIGFPE, handle_kill);
 	signal(SIGALRM, handle_kill);
 	signal(SIGQUIT, handle_kill);
-	signal(SIGSTOP, handle_kill);
+	signal(SIGKILL, handle_kill);
+	signal(SIGBUS, handle_kill);
+	signal(SIGSEGV, handle_kill);
+	signal(SIGSYS, handle_kill);
+	signal(SIGTTIN, handle_kill);
+	signal(SIGTTOU, handle_kill);
+	signal(SIGXCPU, handle_kill);
+	signal(SIGXFSZ, handle_kill);
+	signal(SIGVTALRM, handle_kill);
+	signal(SIGPROF, handle_kill);
+	signal(SIGUSR1, handle_kill);
+	signal(SIGUSR2, handle_kill);
 	signal(SIGTSTP, handle_stp);
 	signal(SIGCONT, handle_cont);
+	signal(SIGWINCH, handle_resize);
 }
 
 void	handle_kill(int signal)

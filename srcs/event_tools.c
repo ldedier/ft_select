@@ -6,41 +6,11 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 19:48:53 by ldedier           #+#    #+#             */
-/*   Updated: 2019/02/13 20:01:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/05 04:23:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-int		dist_to_start(t_dlist *ptr, t_env *e)
-{
-	t_dlist	*ptr2;
-	int		i;
-
-	i = 0;
-	ptr2 = ptr;
-	while (ptr2 != e->args)
-	{
-		ptr2 = ptr2->next;
-		i++;
-	}
-	return (i);
-}
-
-int		dist_to_start_inv(t_dlist *ptr, t_env *e)
-{
-	t_dlist	*ptr2;
-	int		i;
-
-	i = 0;
-	ptr2 = ptr;
-	while (ptr2 != e->args)
-	{
-		ptr2 = ptr2->prev;
-		i++;
-	}
-	return (i);
-}
 
 void	suppr_current(t_env *e, int *stop)
 {

@@ -6,7 +6,7 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 17:50:48 by ldedier           #+#    #+#             */
-/*   Updated: 2019/06/17 19:26:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2019/07/05 04:59:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <term.h>
 # include <sys/ioctl.h>
 # include <sys/stat.h>
-# include <stdio.h> //TODEL
 # include <termcap.h>
 
 # define W_TITLE		50
@@ -37,18 +36,20 @@
 # define FIFO_COL		YELLOW
 # define SOCK_COL		L_MAGENTA
 
-typedef struct		s_arg
-{
-	char			*name;
-	char			selected;
-	char			color[MAX_COLOR_LEN];
-}					t_arg;
-
 typedef struct		s_xy
 {
 	int				x;
 	int				y;
 }					t_xy;
+
+typedef struct		s_arg
+{
+	char			*name;
+	char			selected;
+	char			color[MAX_COLOR_LEN];
+	int				x;
+	int				y;
+}					t_arg;
 
 typedef struct		s_center
 {
@@ -59,6 +60,14 @@ typedef struct		s_center
 	int				nb_columns;
 	int				true_nb_cols;
 }					t_center;
+
+typedef struct		s_renderer
+{
+	int				i;
+	int				j;
+	t_xy			xy;
+	t_dlist			*ptr;
+}					t_renderer;
 
 typedef struct		s_env
 {
